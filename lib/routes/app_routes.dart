@@ -18,6 +18,7 @@ class AppRoutes {
 
   static const String contactUsScreen = '/contact-us';
   static const String privacyPolicyScreen = '/privacy-policy';
+  static const String feedbackScreen = '/feedback';
 
   static const String strokeEmergencyScreen = "/stroke_emergency_screen";
   static const String healthCornerScreen = "/health_corner_screen";
