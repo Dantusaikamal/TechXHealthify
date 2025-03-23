@@ -93,13 +93,6 @@ This module enables users to contact medical professionals in case they need urg
 
 This module provides users with helpful tips on how to maintain a healthy lifestyle and reduce their risk of having a heart stroke. The tips are displayed in a scrollable view and cover various topics, such as exercise, diet, and stress management.
 
-# Demo-Preview
-
-
-
-
-https://github.com/user-attachments/assets/048a69fd-0063-4240-b330-7c7f93e1f257
-
 
 
 
