@@ -1,3 +1,4 @@
+// lib/presentation/pages/home/user_profile_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -11,11 +12,9 @@ import 'package:healthify/helper/lang_controller.dart';
 import 'package:healthify/models/user_model.dart';
 import 'package:healthify/presentation/pages/home/contact_us_screen.dart';
 import 'package:healthify/presentation/pages/home/edit_profile_screen.dart';
+import 'package:healthify/presentation/pages/home/feedback_screen.dart';
 import 'package:healthify/presentation/pages/home/privacy_policy_screen.dart';
-import 'package:healthify/presentation/pages/profile/appointments_screen.dart';
 import 'package:healthify/presentation/pages/profile/medical_records_screen.dart';
-import 'package:healthify/presentation/pages/profile/plans_screen.dart';
-import 'package:healthify/presentation/pages/profile/reports_screen.dart';
 import 'package:healthify/routes/app_routes.dart';
 import 'package:healthify/themes/app_decoration.dart';
 import 'package:healthify/themes/app_styles.dart';
@@ -146,7 +145,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   borderRadius: BorderRadiusStyle.roundedBorder15,
                 ),
                 child: Center(
-                  child: Text("Edit",
+                  child: Text("edit".tr,
                       style: TextStyle(
                         color: ColorConstant.whiteText,
                         fontFamily: "Poppins",
@@ -182,7 +181,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Preferences", style: AppStyle.txtPoppinsBold18Dark),
+              Text("preferences".tr, style: AppStyle.txtPoppinsBold18Dark),
               const SizedBox(height: 22),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,7 +190,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Image.asset(ImageConstant.iconOutlineNotification),
                       const SizedBox(width: 22),
-                      Text("Pop-up Notification",
+                      Text("popupNotification".tr,
                           style: TextStyle(
                             color: ColorConstant.bluedark.withOpacity(0.7),
                             fontSize: 15.5,
@@ -273,7 +272,7 @@ class RatingCard extends StatelessWidget {
   }
 }
 
-/// The rest of your widgets (CustomDropdownButton, OtherWidget, AccountWidget, ItemCardWidget) remain unchanged.
+/// The rest of your widgets remain unchanged.
 
 class CustomDropdownButton extends StatefulWidget {
   const CustomDropdownButton({super.key});
@@ -298,11 +297,9 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
       elevation: 16,
       style: TextStyle(color: ColorConstant.bluedark),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
         });
-
         if (value == "English") {
           updateLocale(const Locale("en", "US"), context);
           langController.setLanguagecode("en");
@@ -346,24 +343,28 @@ class OtherWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "other".tr,
-            style: AppStyle.txtPoppinsBold18Dark,
-          ),
+          Text("account".tr, style: AppStyle.txtPoppinsBold18Dark),
           const SizedBox(height: 22),
+          ItemCardWidget(
+            leadingIcon: const Icon(Icons.folder_shared_outlined),
+            title: "records".tr,
+            onTap: () => Get.to(() => const MedicalRecordsScreen()),
+          ),
           ItemCardWidget(
             leadingIcon: const Icon(Icons.email_outlined),
             title: "contactUs".tr,
-            onTap: () {
-              Get.to(() => const ContactUsScreen());
-            },
+            onTap: () => Get.to(() => const ContactUsScreen()),
           ),
           ItemCardWidget(
             leadingIcon: const Icon(Icons.policy_outlined),
             title: "privacy".tr,
-            onTap: () {
-              Get.to(() => const PrivacyPolicyScreen());
-            },
+            onTap: () => Get.to(() => const PrivacyPolicyScreen()),
+          ),
+          // Feedback option.
+          ItemCardWidget(
+            leadingIcon: const Icon(Icons.feedback_outlined),
+            title: "feedback".tr,
+            onTap: () => Get.to(() => const FeedbackScreen()),
           ),
         ],
       ),
@@ -382,38 +383,12 @@ class AccountWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "account".tr,
-            style: AppStyle.txtPoppinsBold18Dark,
-          ),
+          Text("account".tr, style: AppStyle.txtPoppinsBold18Dark),
           const SizedBox(height: 22),
           ItemCardWidget(
             leadingIcon: const Icon(Icons.folder_shared_outlined),
-            title: "Records",
-            onTap: () {
-              Get.to(() => const MedicalRecordsScreen());
-            },
-          ),
-          ItemCardWidget(
-            leadingIcon: const Icon(Icons.calendar_month_outlined),
-            title: "Appointments",
-            onTap: () {
-              Get.to(() => const AppointmentsScreen());
-            },
-          ),
-          ItemCardWidget(
-            leadingIcon: const Icon(Icons.subscriptions_outlined),
-            title: "My Plans",
-            onTap: () {
-              Get.to(() => const PlansScreen());
-            },
-          ),
-          ItemCardWidget(
-            leadingIcon: const Icon(Icons.analytics_outlined),
-            title: "Progress Reports",
-            onTap: () {
-              Get.to(() => const ReportsScreen());
-            },
+            title: "records".tr,
+            onTap: () => Get.to(() => const MedicalRecordsScreen()),
           ),
         ],
       ),
@@ -425,11 +400,12 @@ class ItemCardWidget extends StatelessWidget {
   final Widget leadingIcon;
   final String title;
   final VoidCallback onTap;
-  const ItemCardWidget(
-      {super.key,
-      required this.leadingIcon,
-      required this.title,
-      required this.onTap});
+  const ItemCardWidget({
+    super.key,
+    required this.leadingIcon,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -443,9 +419,7 @@ class ItemCardWidget extends StatelessWidget {
             Row(
               children: [
                 leadingIcon,
-                const SizedBox(
-                  width: 22,
-                ),
+                const SizedBox(width: 22),
                 Text(
                   title,
                   style: TextStyle(
